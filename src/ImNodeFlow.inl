@@ -9,11 +9,13 @@ namespace ImFlow
         ImDrawList* dl = ImGui::GetWindowDrawList();
         float distance = sqrt(pow((p2.x - p1.x), 2.f) + pow((p2.y - p1.y), 2.f));
         float delta = distance * 0.45f;
-        if (p2.x < p1.x) delta += 0.2f * (p1.x - p2.x);
+        if (p2.x < p1.x) {
+            delta += 0.2f * (p1.x - p2.x);
+            if (delta > 150.f) delta = 150.f;
+        }
         // float vert = (p2.x < p1.x - 20.f) ? 0.062f * distance * (p2.y - p1.y) * 0.005f : 0.f;
         float vert = 0.f;
         ImVec2 p22 = p2 - ImVec2(delta, vert);
-        if (p2.x < p1.x - 50.f) delta *= -1.f;
         ImVec2 p11 = p1 + ImVec2(delta, vert);
         dl->AddBezierCubic(p1, p11, p22, p2, color, thickness);
     }
@@ -29,10 +31,12 @@ namespace ImFlow
         ImDrawList* dl = ImGui::GetWindowDrawList();
         float distance = sqrt(pow((p2.x - p1.x), 2.f) + pow((p2.y - p1.y), 2.f));
         float delta = distance * 0.45f;
-        if (p2.x < p1.x) delta += 0.2f * (p1.x - p2.x);
+        if (p2.x < p1.x) {
+            delta += 0.2f * (p1.x - p2.x);
+            if (delta > 150.f) delta = 150.f;
+        }
         float vert = 0.f;
         ImVec2 p22 = p2 - ImVec2(delta, vert);
-        if (p2.x < p1.x - 50.f) delta *= -1.f;
         ImVec2 p11 = p1 + ImVec2(delta, vert);
 
         const int segments = 32;
@@ -59,11 +63,13 @@ namespace ImFlow
     {
         float distance = sqrt(pow((p2.x - p1.x), 2.f) + pow((p2.y - p1.y), 2.f));
         float delta = distance * 0.45f;
-        if (p2.x < p1.x) delta += 0.2f * (p1.x - p2.x);
+        if (p2.x < p1.x) {
+            delta += 0.2f * (p1.x - p2.x);
+            if (delta > 150.f) delta = 150.f;
+        }
         // float vert = (p2.x < p1.x - 20.f) ? 0.062f * distance * (p2.y - p1.y) * 0.005f : 0.f;
         float vert = 0.f;
         ImVec2 p22 = p2 - ImVec2(delta, vert);
-        if (p2.x < p1.x - 50.f) delta *= -1.f;
         ImVec2 p11 = p1 + ImVec2(delta, vert);
         return ImProjectOnCubicBezier(p, p1, p11, p22, p2).Distance < radius;
     }
