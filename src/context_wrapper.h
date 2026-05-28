@@ -184,6 +184,7 @@ struct ContainedContextConfig
     float default_zoom = 1.f;
     ImGuiKey reset_zoom_key = ImGuiKey_R;
     ImGuiMouseButton scroll_button = ImGuiMouseButton_Middle;
+    ImGuiWindowFlags extra_viewport_window_flags = 0;
 };
 
 class ContainedContext
@@ -238,7 +239,7 @@ inline void ContainedContext::begin()
 {
     ImGui::PushID(this);
     ImGui::PushStyleColor(ImGuiCol_ChildBg, m_config.color);
-    ImGui::BeginChild("view_port", m_config.size, 0, ImGuiWindowFlags_NoMove);
+    ImGui::BeginChild("view_port", m_config.size, 0, ImGuiWindowFlags_NoMove | m_config.extra_viewport_window_flags);
     // Set font density on the OUTER context's child window so the outer renderer
     // rasterizes fonts at the correct scale before we switch context below.
     setFontDensity();
@@ -279,7 +280,8 @@ inline void ContainedContext::begin()
     ImGui::SetNextWindowSize(ImGui::GetMainViewport()->WorkSize);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
     ImGui::Begin("viewport_container", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoMove
-                                                | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+                                                | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse
+                                                | m_config.extra_viewport_window_flags);
     // Set font density again now inside the inner context.
     setFontDensity();
     ImGui::PopStyleVar();
