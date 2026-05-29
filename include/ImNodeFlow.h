@@ -428,7 +428,9 @@ namespace ImFlow
          * @return Const reference to editor's grid scroll
          */
         const ImVec2& getScroll() { return m_context.scroll(); }
-        
+        void setScroll(ImVec2 s) { m_context.setScroll(s); }
+        void setScale(float s)   { m_context.setScale(s); }
+
         /**
          * @brief <BR>Get the scale adjusted screen space mouse delta, needed for dragging
          * 
